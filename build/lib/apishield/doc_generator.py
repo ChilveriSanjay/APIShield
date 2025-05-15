@@ -2,23 +2,24 @@ import os
 import openai
 import datetime
 from dotenv import load_dotenv
-from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI  # Use the latest ChatOpenAI model
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 
-# Load environment variables
+# Load environment variables from .env file
 load_dotenv()
 
-# Retrieve the API key securely from .env file
+# Retrieve the OpenAI API key securely from the environment variables
 api_key = os.getenv("OPENAI_API_KEY")
 if not api_key:
     raise ValueError("API Key is missing in the environment variables")
 
-# Set OpenAI API key
-openai.api_key = api_key
-
 # Function to generate documentation from the data using LangChain
 def generate_documentation(data):
+    """
+    This function generates API documentation based on the provided function data.
+    It utilizes LangChain with the latest OpenAI models (ChatOpenAI) for generating structured documentation.
+    """
     # Define the prompt template for generating documentation
     documentation_template = """
     You are an AI assistant tasked with generating API documentation based on the provided data.
@@ -42,7 +43,8 @@ def generate_documentation(data):
     HTTP Method: {method}
     API Path: {path}
 
-    Please generate comprehensive API documentation based on the above data. You may also suggest security checks and test cases that could be beneficial.
+    Please generate comprehensive API documentation based on the above data. 
+    Provide suggestions for potential security issues and test cases that could be beneficial.
     """
 
     # Initialize LangChain PromptTemplate with the documentation generation prompt
@@ -51,13 +53,13 @@ def generate_documentation(data):
         template=documentation_template
     )
 
-    # Set up the LLM (using OpenAI's model)
-    llm = OpenAI(temperature=0.7, model="gpt-4o-mini")  # Adjust the model as needed
+    # Set up the LLM with the latest model from LangChain (ChatOpenAI)
+    llm = ChatOpenAI(temperature=0.7, model="gpt-4")  # Use the latest GPT-4 model (or any other version you prefer)
 
     # Create an LLMChain to execute the prompt and model
     chain = LLMChain(llm=llm, prompt=prompt)
 
-    # Generate the documentation by running the LLMChain
+    # Generate the documentation by running the LLMChain with provided data
     documentation = chain.run(
         sr_code=data['sr_code'],
         imported_modules=data['imported_modules'],
@@ -71,9 +73,12 @@ def generate_documentation(data):
     return documentation
 
 # Function to write or update the doc_api.txt file
-def write_documentation_to_file(documentation):
-    doc_filename = "doc_api.txt"
-    
+def write_documentation_to_file(documentation, doc_filename="doc_api.txt"):
+    """
+    This function writes the generated documentation to a file.
+    It appends the new documentation along with a timestamp if the file exists,
+    or creates a new file if it doesn't.
+    """
     # Get current timestamp
     current_timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
@@ -91,7 +96,8 @@ def write_documentation_to_file(documentation):
             doc_file.write(documentation)
             doc_file.write("\n\n")
 
-# Example data to pass to the generate_documentation function
+# Generic example data to pass to the generate_documentation function
+# You can replace this with any function's data
 data = {
     'sr_code': 'def simple_view(request):\n    return JsonResponse({"message": "success"})',
     'imported_modules': '["JsonResponse", "RequestFactory"]',
@@ -105,3 +111,4 @@ data = {
 # Generate documentation and write it to a file
 documentation = generate_documentation(data)
 write_documentation_to_file(documentation)
+

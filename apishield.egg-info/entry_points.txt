@@ -1,0 +1,3 @@
+[console_scripts]
+apishield = apishield.cli:review
+

@@ -1,0 +1,10 @@
+Django
+bandit
+black
+djangorestframework
+langchain
+mypy
+pylint
+pytest
+requests
+vulture

@@ -12,3 +12,8 @@ bandit
 requests
 mypy
 langchain
+python-dotenv
+twine>=3.4.0
+wheel>=0.36.2
+setuptools>=49.6.0
+click>=7.1.2

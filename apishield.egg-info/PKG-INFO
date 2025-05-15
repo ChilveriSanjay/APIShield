@@ -1,0 +1,16 @@
+Metadata-Version: 2.1
+Name: apishield
+Version: 0.0.1
+Summary: A tool for dynamic and static code analysis, security checks, and documentation generation for Django REST Framework APIs.
+Home-page: UNKNOWN
+Author: Sanjay Chilveri
+Author-email: chilverisanjay17@gmail.com
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: Framework :: Django
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+
+UNKNOWN
+

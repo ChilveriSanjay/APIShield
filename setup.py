@@ -18,8 +18,8 @@ setup(
         "langchain"
     ],
     entry_points={
-        'console_scripts': [
-            'apishield=apishield.cli:run_dynamic_analysis',
+        'console_scripts': [    
+            'apishield=apishield.cli:review',
         ],
     },
     classifiers=[
